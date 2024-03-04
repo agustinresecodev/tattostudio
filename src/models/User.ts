@@ -1,5 +1,7 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, JoinColumn } from "typeorm"
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, JoinColumn, ManyToMany, OneToOne } from "typeorm"
 import {Role} from "./Role"
+import { Artist } from "./Artist";
+
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -28,5 +30,10 @@ export class User extends BaseEntity {
     @ManyToOne(()=>Role,(role)=>role.user)
     @JoinColumn({name:"role_id"})
     role_id!:Role;
+
+    //Relacion 1:1 con Artist
+    @OneToOne(()=>Artist,(artist)=>artist.userID)
+    @JoinColumn({name:"user_id"})
+    artist!:Artist;
 
 }
