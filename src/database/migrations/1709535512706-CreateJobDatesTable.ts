@@ -1,11 +1,11 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner,Table } from "typeorm";
 
-export class CreateDatesTable1709215940461 implements MigrationInterface {
+export class CreateDatesTable1709535512706 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name:"dates",
+                name:"jobdates",
                 columns:[
                     {
                         name:"id",
@@ -30,12 +30,12 @@ export class CreateDatesTable1709215940461 implements MigrationInterface {
                 foreignKeys:[
                     {
                         columnNames:["artist_id"],
-                        referencedTableName: "users",
+                        referencedTableName: "artists",
                         referencedColumnNames:["id"]
                     },
                     {
                         columnNames:["client_id"],
-                        referencedTableName: "users",
+                        referencedTableName: "clients",
                         referencedColumnNames:["id"]
                     }
                 ]
@@ -44,7 +44,6 @@ export class CreateDatesTable1709215940461 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("dates");
+        await queryRunner.dropTable("jobdates");
     }
-
 }

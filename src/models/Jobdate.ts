@@ -1,12 +1,11 @@
 import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm"
-import { User } from "./User";
 import { Artist } from "./Artist";
 import { Client } from "./Client";
 
-@Entity('dates')
-export class Date extends BaseEntity{
+@Entity('jobdates')
+export class Jobdate extends BaseEntity{
     @PrimaryGeneratedColumn()
-    id!: number;
+    id?: number;
 
     @Column({ name:"day_date" })
     day_date!: Date;
@@ -18,12 +17,12 @@ export class Date extends BaseEntity{
     clientID!: number;
 
     //relation N:1 with artist 
-    @ManyToOne(()=>Artist,(artist)=>artist.dates)
+    @ManyToOne(()=>Artist,(artist)=>artist.jobdates)
     @JoinColumn({name:"artist_id"})
     artist!:Artist;
 
     //relation N:1 with artist 
-    @ManyToOne(()=>Artist,(client)=>client.dates)
+    @ManyToOne(()=>Artist,(client)=>client.jobdates)
     @JoinColumn({name:"client_id"})
     client!:Client;
 }

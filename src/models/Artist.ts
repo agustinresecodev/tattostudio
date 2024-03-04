@@ -1,8 +1,8 @@
 import { Entity,Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, BaseEntity, OneToMany } from "typeorm"
 import { User } from "./User"
-import { Date } from "./Date"
+import { Jobdate } from "./Jobdate"
 
-@Entity()
+@Entity('artists')
 export class Artist extends BaseEntity {
     @PrimaryGeneratedColumn()
     id!:number;
@@ -23,7 +23,7 @@ export class Artist extends BaseEntity {
     user!:User
 
     //Relation 1:N with Dates
-    @OneToMany(()=>Date,(dates)=>dates.artist)
+    @OneToMany(()=>Jobdate,(jobdates)=>jobdates.artist)
     @JoinColumn({name:"id"})
-    dates?:Date[];
+    jobdates?:Jobdate[];
 }

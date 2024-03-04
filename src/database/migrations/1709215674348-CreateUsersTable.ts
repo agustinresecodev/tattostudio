@@ -34,7 +34,7 @@ export class CreateUsersTable1709215674348 implements MigrationInterface {
                     name: "phone",
                     type: "integer",
                     length: "20",
-                    isUnique: true,
+                    
                     },
 
                   {
