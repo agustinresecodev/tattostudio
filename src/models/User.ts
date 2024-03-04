@@ -32,8 +32,8 @@ export class User extends BaseEntity {
     role_id!:Role;
 
     //Relacion 1:1 con Artist
-    @OneToOne(()=>Artist,(artist)=>artist.userID)
-    @JoinColumn({name:"user_id"})
-    artist!:Artist;
+    //@OneToOne(()=>Artist,(artist)=>artist.userID)
+    //@JoinColumn({name:"user_id"})
+    //artist!:Artist;
 
 }
