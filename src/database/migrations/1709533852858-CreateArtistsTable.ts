@@ -1,11 +1,11 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner,Table } from "typeorm";
 
-export class CreateDatesTable1709215940461 implements MigrationInterface {
+export class CreateArtistsTable1709533852858 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name:"dates",
+                name:"artists",
                 columns:[
                     {
                         name:"id",
@@ -15,36 +15,34 @@ export class CreateDatesTable1709215940461 implements MigrationInterface {
                         generationStrategy:"increment"
                     },
                     {
-                        name:"day_date",
-                        type:"datetime",
+                        name:"user_id",
+                        type:"int",
                     },
                     {
-                        name:"artist_id",
-                        type:"int"
+                        name:"style",
+                        type:"varchar",
+                        length:"20"
                     },
                     {
-                        name:"client_id",
-                        type:"int"
+                        name:"area",
+                        type:"varchar",
+                        length:"50"
                     }
                 ],
                 foreignKeys:[
                     {
-                        columnNames:["artist_id"],
+                        columnNames:["user_id"],
                         referencedTableName: "users",
                         referencedColumnNames:["id"]
                     },
-                    {
-                        columnNames:["client_id"],
-                        referencedTableName: "users",
-                        referencedColumnNames:["id"]
-                    }
+                    
                 ]
             })
         )
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable("dates");
+        await queryRunner.dropTable("artists");
     }
 
 }
