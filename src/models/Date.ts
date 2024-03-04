@@ -1,5 +1,7 @@
-import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn, JoinColumn } from "typeorm"
+import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from "typeorm"
 import { User } from "./User";
+import { Artist } from "./Artist";
+import { Client } from "./Client";
 
 @Entity('dates')
 export class Date extends BaseEntity{
@@ -10,19 +12,18 @@ export class Date extends BaseEntity{
     day_date!: Date;
 
     @Column({ name: "artist_id" })
-    artist!: number;
+    artistID!: number;
 
     @Column({name:"client_id"})
-    client!: number;
+    clientID!: number;
 
-    //relacion M:N con tabla User (artist_id)
-    @ManyToMany(()=> User,(user) => user.date)
-    @JoinColumn({name: "artist_id"})
-    user!:User[];
+    //relation N:1 with artist 
+    @ManyToOne(()=>Artist,(artist)=>artist.dates)
+    @JoinColumn({name:"artist_id"})
+    artist!:Artist;
 
-    //relacion M:N con tabla User (client_id)
-    //@ManyToMany(()=> User,(user) => user.dates)
-    //@JoinColumn({name: "artist_id"})
-    //client!:Client[];
-
+    //relation N:1 with artist 
+    @ManyToOne(()=>Artist,(client)=>client.dates)
+    @JoinColumn({name:"client_id"})
+    client!:Client;
 }
