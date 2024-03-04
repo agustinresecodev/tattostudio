@@ -1,5 +1,5 @@
 import { SeederConfig } from "../../config/seeders";
-import { UserRole } from "../../constants/UserRoles";
+import { UserRoles } from "../../constants/UserRoles";
 import { User } from "../../models/User";
 import { UserFactory } from "../factories/UserFactory";
 import { Seeder } from "./Seeder";
@@ -13,19 +13,19 @@ export class UserSeeder extends Seeder {
        // admins
        const adminUsers = userFactory.createMany(ADMINS);
        adminUsers.forEach((user) => {
-          user.role_id = UserRole.ADMIN;
+          user.role_id = UserRoles.ADMIN;
        });
  
        // managers
        const artistUsers = userFactory.createMany(ARTISTS);
        artistUsers.forEach((user) => {
-          user.role_id = UserRole.ARTIST;
+          user.role_id = UserRoles.ARTIST;
        });
  
        // clients
        const clientUsers = userFactory.createMany(CLIENTS);
        clientUsers.forEach((user) => {
-          user.role_id = UserRole.CLIENT;
+          user.role_id = UserRoles.CLIENT;
        });
  
        // save to database
