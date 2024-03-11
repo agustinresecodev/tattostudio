@@ -19,8 +19,5 @@ export class Client extends BaseEntity{
     @JoinColumn({name:"user_id"})
     user!:User
 
-    //Relation 1:N with Dates
-    @OneToMany(()=>Jobdate,(jobdate)=>jobdate.clientID)
-    @JoinColumn({name:"id"})
-    jobdates?:Jobdate[]
+   
 }
