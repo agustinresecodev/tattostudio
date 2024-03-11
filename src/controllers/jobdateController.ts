@@ -26,8 +26,7 @@ export const jobdateController = {
                     }
                 }
             );
-            console.log(jobdates);
-            console.log(totalJobdates);
+            
             res.json(jobdates);
 
         }catch(error){
@@ -44,7 +43,9 @@ export const jobdateController = {
                     id:true,
                     day_date:true,
                     description:true,
-                    price:true
+                    price:true,
+                    artistID:true,
+                    clientID:true
                     
                     }
                     
