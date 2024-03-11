@@ -1,36 +1,21 @@
 import express from 'express';
-
+import { userController } from '../controllers/userController';
 const router = express.Router();
 
 //////////      PROFILE ROUTES      //////////////////
 
-router.get('/profile', (req, res) => {
-    res.send('Get User Profile');
-    })
 
-router.put('/profile', (req, res) => {
-    res.send('Update User Profile');
-    })
+//obtener todos los usuarios
+router.get('/profiles', userController.getAll);
 
-router.get('/jobdates', (req, res) => {
-    res.send('Get User Job Dates');
-    })
+//obtener usuario por id
+router.get('/profiles/:id', userController.getProfileById);
 
-router.get('/jobdates/:id', (req, res) => {
-    res.send('Get User Job Date by ID');
-    })
+//crear usuario
+router.post('/register', userController.create);
 
-router.post('/jobdates', (req, res) => {
-    res.send('Create User Job Date');
-    })
-
-router.put('/jobdates/:id', (req, res) => {
-    res.send('Update User Job Date');
-    })
-
-router.delete('/jobdates/:id', (req, res) => {
-    res.send('Delete User Job Date');
-    })
+//editar usuario
+router.put('/profiles/:id',userController.update);
 
 
 ///////////     PROTECTED ROUTES    /////////////////////
