@@ -16,13 +16,20 @@ export class Jobdate extends BaseEntity{
     @Column({name:"client_id"})
     clientID!: number;
 
+    @Column({name:"description"})
+    description!: string;
+
+    @Column({name:"price"})
+    price!: number;
+
     //relation N:1 with artist 
-    @ManyToOne(()=>Artist,(artist)=>artist.jobdates)
+    @ManyToOne(()=>Artist,(artist)=>artist.id)
     @JoinColumn({name:"artist_id"})
     artist!:Artist;
 
     //relation N:1 with artist 
-    @ManyToOne(()=>Artist,(client)=>client.jobdates)
+    @ManyToOne(()=>Client,(client)=>client.id)
     @JoinColumn({name:"client_id"})
     client!:Client;
+
 }

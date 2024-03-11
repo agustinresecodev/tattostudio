@@ -25,6 +25,15 @@ export class CreateDatesTable1709535512706 implements MigrationInterface {
                     {
                         name:"client_id",
                         type:"int"
+                    },
+                    {
+                        name:"description",
+                        type:"varchar",
+                        length:"200"
+                    },
+                    {
+                        name:"price",
+                        type:"int",
                     }
                 ],
                 foreignKeys:[

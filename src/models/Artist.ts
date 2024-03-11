@@ -22,8 +22,5 @@ export class Artist extends BaseEntity {
     @JoinColumn({name:"user_id"})
     user!:User
 
-    //Relation 1:N with Dates
-    @OneToMany(()=>Jobdate,(jobdates)=>jobdates.artist)
-    @JoinColumn({name:"id"})
-    jobdates?:Jobdate[];
+    
 }
