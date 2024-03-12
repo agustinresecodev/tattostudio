@@ -10,7 +10,15 @@ export class ArtistSeeder extends Seeder{
     protected async generate():Promise <void>{
         const {ARTISTS} = SeederConfig;
 
-        const users = await User.find();
+        const users = await User.find(
+            {
+                where:{
+                    role:{
+                        id:2
+                    }
+                }
+            }
+        );
         const artists = new ArtistFactory().createMany(ARTISTS);
         artists.forEach(artist =>{
             artist.user= getRandomValueFromArray(users)

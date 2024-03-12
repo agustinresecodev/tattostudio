@@ -113,5 +113,78 @@ export const jobdateController = {
         }catch(error){
             res.status(500).json({message:"Something went wrong"});
         }
-    }
+    },
+
+    //Get all Jobdates by Client
+    async getByClient(req:Request,res:Response){
+    const client = await Client.findOne({
+        select:{
+            id:true
+        },
+        where:{
+            userID:req.tokenData?.userId
+        }});
+
+    const jobdates = await Jobdate.find({
+        relations:{
+            artist:true,
+            client:true,
+        },
+        select:{
+            id:true,
+            day_date:true,
+            description:true,
+            price:true,
+            artist:{
+                    id:true,                                  
+            },
+            client:{
+                id:true                
+            }
+            },
+            where:{
+                clientID:client?.id
+            }
+            
+        });
+        res.json(jobdates);
+
+    },
+
+    //Get all Jobdates by Client
+    async getByArtist(req:Request,res:Response){
+        const artist = await Client.findOne({
+            select:{
+                id:true
+            },
+            where:{
+                userID:req.tokenData?.userId
+            }});
+    
+        const jobdates = await Jobdate.find({
+            relations:{
+                artist:true,
+                client:true,
+            },
+            select:{
+                id:true,
+                day_date:true,
+                description:true,
+                price:true,
+                artist:{
+                        id:true,                                  
+                },
+                client:{
+                    id:true                
+                }
+                },
+                where:{
+                    clientID:artist?.id
+                }
+                
+            });
+            res.json(jobdates);
+    
+        }
+
 }

@@ -9,7 +9,15 @@ export class ClientSeeder extends Seeder{
     protected async generate():Promise <void>{
         const {CLIENTS} = SeederConfig;
 
-        const users =await User.find();
+        const users =await User.find(
+            {
+                where:{
+                    role:{
+                        id:3
+                    }
+                }
+            }
+        );
         const clients = new ClientFactory().createMany(CLIENTS);
         clients.forEach(client=>{
             client.user=getRandomValueFromArray(users)

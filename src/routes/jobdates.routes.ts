@@ -7,19 +7,25 @@ const router = express.Router();
 /////////      PROFILE ROUTES      //////////////////
 
 
-//obtener todos los usuarios
+//get all jobdates
 router.get('/',authMiddleware, jobdateController.getAll);
 
-//obtener usuario por id
+//get jobdatebyid
 router.get('/:id',authMiddleware, jobdateController.getById);
 
-//crear cita
+//create jobdate
 router.post('/register',authMiddleware, jobdateController.create);
 
-//editar usuario
+//edit jobdate
 router.put('/:id',authMiddleware, jobdateController.update);
 
-//eliminar usuario
+//delete date
 router.delete('/:id',authMiddleware, jobdateController.delete);
+
+//get jobdates by client
+router.get('/client/jobdates',authMiddleware, jobdateController.getByClient);
+
+//get jobdates by artist
+//router.get('/artist/jobdates',authMiddleware, jobdateController.getByArtist);
 
 export default router;
