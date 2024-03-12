@@ -13,7 +13,7 @@ export const userController = {
         try {
             const {firstName,lastName,email,phone,password,isActive,} = req.body;
             const hashedPassword = await bcrypt.hash(password,10);
-            const role =1;
+            
             const user = User.create({
                 firstName: firstName,
                 lastName: lastName,
@@ -21,7 +21,7 @@ export const userController = {
                 phone: phone,
                 password:hashedPassword,
                 isActive:isActive,
-                role_id:UserRoles.CLIENT
+                role:UserRoles.CLIENT
 
             });
             await user.save();
@@ -94,7 +94,7 @@ export const userController = {
    
             const user = await User.findOne({
                relations: {
-                  role_id: true,
+                  role: true,
                },
                where: { id: userId },
             });

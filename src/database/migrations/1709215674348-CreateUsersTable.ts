@@ -23,6 +23,7 @@ export class CreateUsersTable1709215674348 implements MigrationInterface {
                      name: "last_name",
                      type: "varchar",
                      length: "50",
+                     isNullable: true
                   },
                   {
                      name: "email",
@@ -34,6 +35,7 @@ export class CreateUsersTable1709215674348 implements MigrationInterface {
                     name: "phone",
                     type: "integer",
                     length: "20",
+                    isNullable: true
                     
                     },
 
@@ -46,6 +48,7 @@ export class CreateUsersTable1709215674348 implements MigrationInterface {
                      name: "is_active",
                      type: "boolean",
                      default: true,
+                     isNullable: true
                   },
                   {
                      name: "role_id",
