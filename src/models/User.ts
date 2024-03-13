@@ -21,7 +21,7 @@ export class User extends BaseEntity {
     @Column({name:"phone"})
     phone!:number;
 
-    @Column({name:"password"})
+    @Column({name:"password", select:false})
     password!:string;
 
     @Column({name:"is_active"})

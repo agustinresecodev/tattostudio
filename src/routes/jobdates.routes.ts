@@ -4,7 +4,7 @@ import { de } from '@faker-js/faker';
 import { authMiddleware } from '../middlewares/authMiddleware';
 const router = express.Router();
 
-/////////      PROFILE ROUTES      //////////////////
+/////////      JOBDATES ROUTES      //////////////////
 
 
 //get all jobdates
@@ -14,7 +14,7 @@ router.get('/',authMiddleware, jobdateController.getAll);
 router.get('/:id',authMiddleware, jobdateController.getById);
 
 //create jobdate
-router.post('/register',authMiddleware, jobdateController.create);
+router.post('/create',authMiddleware, jobdateController.create);
 
 //edit jobdate
 router.put('/:id',authMiddleware, jobdateController.update);
@@ -23,9 +23,9 @@ router.put('/:id',authMiddleware, jobdateController.update);
 router.delete('/:id',authMiddleware, jobdateController.delete);
 
 //get jobdates by client
-router.get('/client/jobdates',authMiddleware, jobdateController.getByClient);
+router.get('/client/jobdates',authMiddleware, jobdateController.getByLogedClient);
 
 //get jobdates by artist
-//router.get('/artist/jobdates',authMiddleware, jobdateController.getByArtist);
+router.get('/artist/jobdates',authMiddleware, jobdateController.getByLogedArtist);
 
 export default router;

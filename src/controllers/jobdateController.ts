@@ -116,7 +116,7 @@ export const jobdateController = {
     },
 
     //Get all Jobdates by Client
-    async getByClient(req:Request,res:Response){
+    async getByLogedClient(req:Request,res:Response){
     const client = await Client.findOne({
         select:{
             id:true
@@ -127,8 +127,12 @@ export const jobdateController = {
 
     const jobdates = await Jobdate.find({
         relations:{
-            artist:true,
-            client:true,
+            artist:{
+                user:true
+            },
+            client:{
+                user:true
+            },
         },
         select:{
             id:true,
@@ -136,7 +140,8 @@ export const jobdateController = {
             description:true,
             price:true,
             artist:{
-                    id:true,                                  
+                    id:true,
+                    user:{},                                
             },
             client:{
                 id:true                
@@ -152,7 +157,7 @@ export const jobdateController = {
     },
 
     //Get all Jobdates by Client
-    async getByArtist(req:Request,res:Response){
+    async getByLogedArtist(req:Request,res:Response){
         const artist = await Client.findOne({
             select:{
                 id:true

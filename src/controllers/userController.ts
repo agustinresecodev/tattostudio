@@ -52,7 +52,7 @@ export const userController = {
             user.password = password;
             user.isActive = isActive;
             await user.save();
-            res.json(user);
+            res.status(200).json({message:"User updated successfully"});
         }catch(error){
             res.status(500).json({message:"Something went wrong"});
         }
@@ -99,7 +99,7 @@ export const userController = {
                where: { id: userId },
             });
 
-            console.log(user);
+           
 
             if (!user) {
                res.status(404).json({ message: "User not found" });
@@ -108,10 +108,77 @@ export const userController = {
    
             res.json(user);
          } catch (error) {
+            
             res.status(500).json({
                message: "Failed to retrieve user",
             });
          }
+    },
+
+    //DELETE PROFILE
+    async delete(req:Request,res:Response){
+        try {
+            //take the id from the request
+            const userId = Number(req.params.id);
+            //find the user by id
+            const user = await User.findOne({where:{id:userId}});
+            //if the user is not found, return a 404 status
+            if(!user){
+                res.status(404).json({message:"User not found"});
+                return;
+            }
+            //remove the user
+            await user.remove();
+            //return a 200 status
+            res.status(200).json({message:"User deleted successfully"});
+        }catch(error){
+            console.error(error);
+            //if something goes wrong, return a 500 status
+            res.status(500).json({message:"Something went wrong"});
+        }
+    },
+    
+    async getLogedUser(req:Request,res:Response){
+        try {
+            const userId = req.tokenData?.userId;
+            console.log(userId);
+            const user = await User.findOne({
+                relations:{
+                    role:true
+                },
+                where:{
+                    id:userId
+                }
+            });
+            res.json(user).status(200).json({message:"User found successfully"});
+
+        }catch(error){
+            res.status(500).json({message:"Something went wrong"});
+        }
+    },
+
+    async updateLogedUser(req:Request,res:Response){
+        try {
+            const userId = req.tokenData?.userId;
+            const {firstName,lastName,email,phone,isActive} = req.body;
+            const user = await User.findOne({where:{id:userId}});
+
+            if(!user){
+                res.status(404).json({message:"User not found"});
+                return;
+            }
+
+            user.firstName = firstName;
+            user.lastName = lastName;
+            user.email = email;
+            user.phone = phone;
+            user.isActive = isActive;
+
+            await user.save();
+            res.status(200).json(user);
+        } catch (error) {
+            res.status(500).json({message:"Something went wrong"});
+        }
     }
 
     
