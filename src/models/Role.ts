@@ -10,7 +10,7 @@ export class Role extends BaseEntity {
     name!: string;
 
     // Relation 1:N con tabla users
-    @OneToMany(()=> User,(user)=>user.role_id)
+    @OneToMany(()=> User,(user)=>user.role)
     user!:User[];
 
 }

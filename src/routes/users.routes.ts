@@ -1,40 +1,44 @@
 import express from 'express';
 import { userController } from '../controllers/userController';
+import { authMiddleware } from '../middlewares/authMiddleware';
 const router = express.Router();
 
 //////////      PROFILE ROUTES      //////////////////
 
 
-//obtener todos los usuarios
-router.get('/profiles', userController.getAll);
 
-//obtener usuario por id
-router.get('/profiles/:id', userController.getProfileById);
+//get all users
+router.get('/all', authMiddleware, userController.getAll);
 
 //crear usuario
-router.post('/register', userController.create);
+router.post('/create',authMiddleware, userController.create);
 
 //editar usuario
-router.put('/profiles/:id',userController.update);
+router.put('/edit/:id',authMiddleware ,userController.update);
 
+//delete user
+router.delete('/delete/:id',authMiddleware, userController.delete);
+
+
+//get loged user profile
+router.get('/profile/',authMiddleware, userController.getLogedUser);
+
+//Update loged user profile
+router.put('/profile/update',authMiddleware, userController.updateLogedUser);
+
+
+//get user id
+router.get('/:id', authMiddleware, userController.getProfileById);
 
 ///////////     PROTECTED ROUTES    /////////////////////
-router.get('/', (req, res) => {
-    res.send('Get Users');
-    })
+
+//edit user role
+router.put('/edit/role/:id',authMiddleware, userController.editUserRole);
 
 
-router.get('/:id', (req, res) => {
-    res.send('Get User by ID');
-    })
 
-router.put('/:id', (req, res) => {
-    res.send('Update User');
-    })
 
-router.delete('/:id', (req, res) => {
-    res.send('Delete User');
-    })
+
 
 export default router;
 

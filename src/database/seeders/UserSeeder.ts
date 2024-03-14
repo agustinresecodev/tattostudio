@@ -13,19 +13,19 @@ export class UserSeeder extends Seeder {
        // admins
        const adminUsers = userFactory.createMany(ADMINS);
        adminUsers.forEach((user) => {
-          user.role_id = UserRoles.ADMIN;
+          user.role = UserRoles.ADMIN;
        });
  
        // managers
        const artistUsers = userFactory.createMany(ARTISTS);
        artistUsers.forEach((user) => {
-          user.role_id = UserRoles.ARTIST;
+          user.role = UserRoles.ARTIST;
        });
  
        // clients
        const clientUsers = userFactory.createMany(CLIENTS);
        clientUsers.forEach((user) => {
-          user.role_id = UserRoles.CLIENT;
+          user.role = UserRoles.CLIENT;
        });
  
        // save to database
