@@ -1,5 +1,5 @@
 import { NextFunction,Request,Response } from "express";
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt,{JwtPayload} from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 export const authMiddleware = (
@@ -23,13 +23,17 @@ export const authMiddleware = (
             token, 
             process.env.JWT_SECRET as string
             ) as JwtPayload;
+
         //add the token data to the request    
         req.tokenData = {
             userId: decoded.userId,
             userRole: decoded.userRole,
             }
+        
+
         //call the next middleware
         next();
+        
     }catch(error){
         res.status(401).json({message: "Unauthorized"});
         

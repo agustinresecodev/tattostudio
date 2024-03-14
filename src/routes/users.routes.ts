@@ -32,6 +32,9 @@ router.get('/:id', authMiddleware, userController.getProfileById);
 
 ///////////     PROTECTED ROUTES    /////////////////////
 
+//edit user role
+router.put('/edit/role/:id',authMiddleware, userController.editUserRole);
+
 
 
 

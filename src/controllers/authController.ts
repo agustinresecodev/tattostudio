@@ -5,6 +5,7 @@ import { UserRoles } from '../constants/UserRoles';
 import { Role } from '../models/Role';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { TokenData } from '../types/types';
 
 
 export const authController = {
@@ -34,13 +35,13 @@ export const authController = {
            });
   
            //save the user in DB
-           await userToCreate.save();
+           await User.save(userToCreate);
 
-           res.status(201).json(userToCreate);
+           res.status(201).json({ message: "User created succesfully" });
   
         } catch (error) {
             //if something goes wrong, return a 500 status
-            console.log(error);
+            
            res.status(500).json({
             
               message: "Failed to create user",
@@ -93,10 +94,9 @@ export const authController = {
             const userRoleName = user.role.name;
            
             // Payload
-            const tokenPayload = {
-                id: user.id,
-                email: user.email,
-                role: userRoleName,
+            const tokenPayload: TokenData = {
+                userId: user.id,
+                userRole: userRoleName,
             };
             // Generate token
             const token = jwt.sign(tokenPayload,process.env.JWT_SECRET as string,{

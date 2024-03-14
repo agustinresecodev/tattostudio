@@ -179,8 +179,52 @@ export const userController = {
         } catch (error) {
             res.status(500).json({message:"Something went wrong"});
         }
-    }
+    },
 
+    async editUserRole(req:Request,res:Response){
+        try{
+            //take the user id from the request
+            const userId = Number(req.params.id);
+
+            //take the role id from the request
+            const roleId = Number(req.body.roleId);
+            
+            //find the user by id
+            const userToChange = await User.findOne(
+                {   
+                    relations:{
+                        role:true
+                    },
+                    select:{
+                        id:true,
+                        firstName:true,
+                        role:{
+                            id:true,
+                        }
+                    },
+                    where:{
+                        id:userId
+                    }
+                })
+            //if the user is not found, return a 404 status
+            if(!userToChange){
+                res.status(404).json({message:"User not found"});
+                return;
+            }
+
+            //change the role of the user
+            userToChange.role.id = roleId;
     
+            //save the user in DB
+            await User.save(userToChange);
+
+            //return a 200 status
+            res.status(200).json({message:"Role updated successfully"});
+
+        }catch(error){
+            console.log(error);
+            res.status(500).json({message:"Something went wrong"});
+        }
+    }
 
 }

@@ -33,6 +33,7 @@ export const jobdateController = {
             res.status(500).json({message:"Something went wrong"});
         }
     },
+
     //Get Jobdate by ID
     async getById(req:Request,res:Response){
         try {
@@ -57,6 +58,7 @@ export const jobdateController = {
             res.status(500).json({message:"Something went wrong"});
         }
     },
+
     //Create Jobdate
     async create(req:Request,res:Response){
         try {
@@ -73,7 +75,7 @@ export const jobdateController = {
             res.json(jobdate);
         }catch(error){
             res.status(500).json({message:"Something went wrong"});
-            console.error(error);
+            
         }
     },
 
@@ -99,6 +101,7 @@ export const jobdateController = {
             res.status(500).json({message:"Something went wrong"});
         }
     },
+
     //Delete Jobdate
     async delete(req:Request,res:Response){
         try {
@@ -117,14 +120,19 @@ export const jobdateController = {
 
     //Get all Jobdates by Client
     async getByLogedClient(req:Request,res:Response){
-    const client = await Client.findOne({
+
+    const reqToken = req.tokenData.userId;
+    console.log(reqToken); 
+
+    const logedClient = await Client.findOne({
         select:{
             id:true
         },
         where:{
-            userID:req.tokenData?.userId
+            userID:req.tokenData!.userId
         }});
 
+        console.log(req.tokenData);
     const jobdates = await Jobdate.find({
         relations:{
             artist:{
@@ -141,30 +149,42 @@ export const jobdateController = {
             price:true,
             artist:{
                     id:true,
-                    user:{},                                
+                    user:{
+                        firstName:true,
+                        email:true,
+                        phone:true,
+                    }                                
             },
             client:{
-                id:true                
-            }
-            },
-            where:{
-                clientID:client?.id
-            }
+                id:true,
+                user:{
+                    firstName:true,
+                    email:true,
+                    phone:true,                
+                }
             
-        });
+            
+            }
+        },
+        where:{
+            clientID:logedClient!.id
+        }});
+
         res.json(jobdates);
 
     },
 
-    //Get all Jobdates by Client
+    //Get all Jobdates by Loged Artist
     async getByLogedArtist(req:Request,res:Response){
-        const artist = await Client.findOne({
+        const artist = await Artist.findOne({
             select:{
                 id:true
             },
             where:{
                 userID:req.tokenData?.userId
             }});
+            console.log(req.tokenData);
+            console.log(artist);
     
         const jobdates = await Jobdate.find({
             relations:{
@@ -177,18 +197,28 @@ export const jobdateController = {
                 description:true,
                 price:true,
                 artist:{
-                        id:true,                                  
+                        id:true,
+                        user:{
+                            firstName:true,
+                            email:true,
+                            phone:true,
+                        }                                  
                 },
                 client:{
-                    id:true                
+                    id:true, 
+                    user:{
+                        firstName:true,
+                        email:true,
+                        phone:true,
+                    }               
                 }
                 },
                 where:{
-                    clientID:artist?.id
+                    artistID:artist?.id
                 }
                 
             });
-            res.json(jobdates);
+            res.json(jobdates).status(200);
     
         }
 
