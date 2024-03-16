@@ -3,9 +3,12 @@ import { authController } from '../controllers/authController';
 
 const router = express.Router();
 
-//////////////////////////////////////////a
+////////////  AUTH ROUTES  ///////////////////
+
+// login
 router.post('/login',authController.login)
 
+//register
 router.post('/register',authController.register);
 
 

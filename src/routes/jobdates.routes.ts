@@ -7,13 +7,6 @@ const router = express.Router();
 
 /////////      JOBDATES ROUTES      //////////////////
 
-
-//get all jobdates
-router.get('/',authMiddleware,authorizeMiddleware(["Admin"]), jobdateController.getAll);
-
-//get jobdatebyid
-router.get('/:id',authMiddleware,authorizeMiddleware(["Admin"]), jobdateController.getById);
-
 //create jobdate
 router.post('/create',authMiddleware,authorizeMiddleware(["Artist"]), jobdateController.create);
 
@@ -28,5 +21,14 @@ router.get('/client/jobdates',authMiddleware,authorizeMiddleware(["Client"]), jo
 
 //get jobdates by artist
 router.get('/artist/jobdates',authMiddleware, authorizeMiddleware(["Artist"]),jobdateController.getByLogedArtist);
+
+
+//////////////////// PROTECTED ROUTES //////////////////////
+
+//get all jobdates
+router.get('/',authMiddleware,authorizeMiddleware(["Admin"]), jobdateController.getAll);
+
+//get jobdatebyid
+router.get('/:id',authMiddleware,authorizeMiddleware(["Admin"]), jobdateController.getById);
 
 export default router;
