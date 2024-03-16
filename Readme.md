@@ -5,7 +5,6 @@
   <ol>
     <li><a href="#objetive">Objetive</a></li>
     <li><a href="#about-the-project">About the project</a></li>
-    <li><a href="#deploy-🚀">Deploy</a></li>
     <li><a href="#stack">Stack</a></li>
     <li><a href="#diagrama-bd">Diagram</a></li>
     <li><a href="#instalación-en-local">Instalation</a></li>
@@ -41,7 +40,7 @@ Used technologies:
  </div>
 
 
-## Diagrama BD
+## DB DIAGRAM
 ![image](https://hackmd.io/_uploads/HyshXfXCT.png)
 
 
