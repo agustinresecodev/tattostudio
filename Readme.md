@@ -34,8 +34,9 @@ Used technologies:
     <img src= "https://img.shields.io/badge/javascipt-EFD81D?style=for-the-badge&logo=javascript&logoColor=black"/>
 </a>
     
-<a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/typescript-blue?style=for-the-badge&logo=typescript&logoColor=white
-"></a>
+<a href="https://www.typescriptlang.org/">
+    <img src="https://img.shields.io/badge/typescript-blue?style=for-the-badge&logo=typescript&logoColor=white">
+</a>
 
  </div>
 
