@@ -39,20 +39,49 @@ export const jobdateController = {
         try {
             const id = Number(req.params.id);
             const jobdate = await Jobdate.findOne({
-                where:{id:id},
+                relations:{
+                    artist:{
+                        user:true
+                    },
+                    client:{
+                        user:true
+                    
+                    },
+                },
                 select:{
                     id:true,
                     day_date:true,
                     description:true,
                     price:true,
-                    artistID:true,
-                    clientID:true
-                    
+                    artist:{
+                            id:true,
+                            user:{
+                                firstName:true,
+                                email:true,
+                                phone:true,
+                            }                                  
+                    },
+                    client:{
+                        id:true, 
+                        user:{
+                            firstName:true,
+                            email:true,
+                            phone:true,
+                        }               
+                    }
+                    },
+                    where:{
+                        id:id
                     }
                     
-                }
-                
-            );
+                });
+            if(!jobdate){
+                res.status(404).json({message:"Jobdate not found"});
+                return;
+            }
+
+            console.log(jobdate);
+
             res.json(jobdate);
         }catch(error){
             res.status(500).json({message:"Something went wrong"});
@@ -218,6 +247,7 @@ export const jobdateController = {
                 }
                 
             });
+            
             res.json(jobdates).status(200);
     
         }
