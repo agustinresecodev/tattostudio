@@ -3,73 +3,75 @@ import { Artist } from "../models/Artist";
 import { UserRoles } from "../constants/UserRoles";
 import { User } from "../models/User";
 
-
 export const artistController = {
-    async getAll(req:Request,res:Response){
-        try{
-            const page = Number(req.query.page) ||1;
-            const limit = Number(req.query.limit) || 10;
+  async getAll(req: Request, res: Response) {
+    try {
+      // find and count all artists
+      const artists = await Artist.findAndCount({
+        relations: {
+          user: true,
+        },
 
-            const artists = await Artist.findAndCount(
-                {   
-                    relations:{
-                        user:true
-                    },
-                    
-                    select:{
-                        user:{
-                            firstName:true,
-                            email:true,
-                            phone:true,
-                        },
-                    }
-                }
-            );
-            res.json(artists);
+        select: {
+          user: {
+            firstName: true,
+            email: true,
+            phone: true,
+          },
+        },
+      });
 
-        }catch(error){
-            res.status(500).json({message:"Something went wrong"});
-        }
-    },
+      //response with the artists and the total of artists
+      res.json(artists).status(200);
+    } catch (error) {
+      res.status(500).json({ message: "Something went wrong" });
+    }
+  },
 
-    async create(req:Request,res:Response){
-        try{
-            const {firstName, email, password, phone,style,area} = req.body;
+  async create(req: Request, res: Response) {
+    try {
+      //get the data from the request body
+      const { firstName, email, password, phone, style, area } = req.body;
 
-            if(!firstName || !email || !password || !phone){
-                res.status(400).json({message:"Failed to create artist"});
-                return;
-            }
+      //if there is no data, return a 400 status
+      if (!firstName || !email || !password || !phone) {
+        res.status(400).json({ message: "Failed to create artist" });
+        return;
+      }
 
-            const userExists = await User.findOne({where:{email:email}});
+      //check if the email is already in use
+      const userExists = await User.findOne({ where: { email: email } });
 
-            if(userExists){
-                res.status(400).json({message:"Email already in use"});
-                return;
-            }
+      //if the email is already in use, return a 400 status
+      if (userExists) {
+        res.status(400).json({ message: "Email already in use" });
+        return;
+      }
 
-            const user = User.create({
-                firstName:firstName,
-                email:email,
-                password:password,
-                phone:phone,
-                role:UserRoles.ARTIST
-            });
+      //create a new user
+      const user = User.create({
+        firstName: firstName,
+        email: email,
+        password: password,
+        phone: phone,
+        role: UserRoles.ARTIST,
+      });
 
-            await User.save(user);
+      //save the user
+      await User.save(user);
 
-            const artist = Artist.create({
-                style:style,
-                area:area,
-                user:user
-            });
+      //create a new artist
+      const artist = Artist.create({
+        style: style,
+        area: area,
+        user: user,
+      });
 
-            await Artist.save(artist);
+      //save the artist
+      await Artist.save(artist);
 
-            res.status(201).json({message:"Artist created succesfully"});
-
-
-        }catch(error){}
-    },
-
-}
+      //response with a 201 status
+      res.status(201).json({ message: "Artist created succesfully" });
+    } catch (error) {}
+  },
+};
